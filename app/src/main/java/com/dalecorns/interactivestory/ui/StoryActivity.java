@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dalecorns.interactivestory.R;
+import com.dalecorns.interactivestory.model.Page;
 
 public class StoryActivity extends AppCompatActivity {
 
