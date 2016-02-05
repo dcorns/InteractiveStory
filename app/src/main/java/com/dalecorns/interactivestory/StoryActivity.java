@@ -14,7 +14,7 @@ public class StoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        String name = intent.getStringExtra(getString(R.string.key_name));
         if(name == null){
             name = "no Data!";
         }

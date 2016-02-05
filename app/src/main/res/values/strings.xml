@@ -4,4 +4,5 @@
     <string name="start_button">START YOUR ADVENTURE</string>
     <string name="name_text_hint">Enter your name to begin...</string>
     <string name="title_activity_story">StoryActivity</string>
+    <string name="key_name">name</string>
 </resources>
