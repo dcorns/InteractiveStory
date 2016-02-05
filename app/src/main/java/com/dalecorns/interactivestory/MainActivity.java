@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private EditText mNameField;
@@ -21,13 +20,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = mNameField.getText().toString();
-                startStory();
+                startStory(name);
             }
         });
     }
 
-    private void startStory(){
+    private void startStory(String name){
         Intent intent = new Intent(this, StoryActivity.class);
+        intent.putExtra("name", name);
         startActivity(intent);
     }
 
