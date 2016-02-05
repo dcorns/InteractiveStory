@@ -1,9 +1,11 @@
-package com.dalecorns.interactivestory;
+package com.dalecorns.interactivestory.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.dalecorns.interactivestory.R;
 
 public class StoryActivity extends AppCompatActivity {
 
