@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,35 +24,62 @@ public class StoryActivity extends AppCompatActivity {
     private TextView mTextView;
     private Button mChoice1;
     private Button mChoice2;
+    private Page mCurrrentPage;
+    private String mName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
         Intent intent = getIntent();
-        String name = intent.getStringExtra(getString(R.string.key_name));
-        if(name == null){
-            name = "no Data!";
+        mName = intent.getStringExtra(getString(R.string.key_name));
+        if(mName == null){
+            mName = "no Data!";
         }
         mImageView = (ImageView) findViewById(R.id.storyImageView);
         mTextView = (TextView) findViewById(R.id.storyTextView);
         mChoice1 = (Button) findViewById(R.id.choiceButton1);
         mChoice2 = (Button) findViewById(R.id.choiceButton2);
-        loadPage(name);
-        Log.d(TAG, name);
+        loadPage(0);
+        Log.d(TAG, mName);
     }
 
-    private void loadPage(String name){
-       Page page = mStory.getPage(0);
-        Drawable drawable = getResources().getDrawable(page.getImageId());
+    private void loadPage(int choice){
+        mCurrrentPage = mStory.getPage(choice);
+        Drawable drawable = getResources().getDrawable(mCurrrentPage.getImageId());
         mImageView.setImageDrawable(drawable);
-        String pageText = page.getText();
+        String pageText = mCurrrentPage.getText();
         //String.format takes a string with place holders and replaces the holders with the arguments that follow
-        pageText = String.format(pageText, name);
+        pageText = String.format(pageText, mName);
         mTextView.setText(pageText);
-        mChoice1.setText(page.getChoice1().getText());
-        mChoice2.setText(page.getChoice2().getText());
-
+        if (mCurrrentPage.getFinal()){
+            mChoice1.setVisibility(View.INVISIBLE);
+            mChoice2.setText("Play Again");
+            mChoice2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+        else {
+            mChoice1.setText(mCurrrentPage.getChoice1().getText());
+            mChoice2.setText(mCurrrentPage.getChoice2().getText());
+            mChoice1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int nextPage = mCurrrentPage.getChoice1().getNextPage();
+                    loadPage(nextPage);
+                }
+            });
+            mChoice2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int nextPage = mCurrrentPage.getChoice2().getNextPage();
+                    loadPage(nextPage);
+                }
+            });
+        }
 
     }
 
